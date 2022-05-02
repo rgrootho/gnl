@@ -6,7 +6,7 @@
 /*   By: romee <romee@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/18 17:44:41 by romee             #+#    #+#             */
-/*   Updated: 2022/05/02 16:25:32 by romee            ###   ########.fr       */
+/*   Updated: 2022/05/02 18:06:15 by romee            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,11 +147,37 @@ char	*check_for_nl(char *return_string, char *buffer)
 	return(return_string);
 }
 
+char *read_and_check(char *return_string, char *buffer, int fd)
+{
+	while(ft_strlen(return_string, '\n') == ft_strlen(return_string, '\0'))
+	{
+		size_t bytes_read;
+
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
+		if (bytes_read == 0 && return_string[0] != '\0')
+		{
+			buffer[0] = '\0';
+			return(return_string);
+		}
+		if(bytes_read <= 0 && return_string[0] == '\0')
+		{
+			free(return_string);
+			return(NULL);
+		}
+		buffer[bytes_read] = '\0';
+		return_string = check_for_nl(return_string, buffer);
+		if (return_string == NULL)
+			return(NULL);
+		if (ft_strlen(return_string, '\n') < ft_strlen(return_string, '\0'))
+			break;
+	}
+	return(return_string);
+}
+
 char *get_next_line(int fd)
 {
 	static char	*save_buff;
 	char *return_string;
-	size_t bytes_read;
 
 	return_string = NULL;
 	if(!save_buff)
@@ -169,26 +195,9 @@ char *get_next_line(int fd)
 		if(ft_strlen(return_string, '\n') < ft_strlen(return_string, '\0'))
 			return(return_string);
 	}
-	while(ft_strlen(return_string, '\n') == ft_strlen(return_string, '\0'))
-	{
-		bytes_read = read(fd, save_buff, BUFFER_SIZE);
-		if (bytes_read == 0 && return_string[0] != '\0')
-		{
-			save_buff[0] = '\0';
-			return(return_string);
-		}
-		if(bytes_read <= 0 && return_string[0] == '\0')
-		{
-			free(return_string);
-			return(NULL);
-		}
-		save_buff[bytes_read] = '\0';
-		return_string = check_for_nl(return_string, save_buff);
+		return_string = read_and_check(return_string, save_buff, fd);
 		if (return_string == NULL)
 			return(NULL);
-		if (ft_strlen(return_string, '\n') < ft_strlen(return_string, '\0'))
-			break;
-	}
 	return(return_string);
 }
 
@@ -210,7 +219,7 @@ int main(void)
 	}
 	free(string);
 	close(fd);
-	system("leaks a.out");
+	//system("leaks a.out");
 
 	return (0);
 }
