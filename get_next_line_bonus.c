@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 #include <stdio.h>
 
 char *manage_rs(char *rs, char *line_to_check, int index_nl, int index_term)
@@ -36,7 +36,7 @@ char *check_and_move(char *save_bytes, char *rs, char *line_to_check)
         ft_memmove(&line_to_check[index_nl + 1], save_bytes, index_term - index_nl - 1);
     if (index_term > index_nl && index_term - index_nl - 1 == 0)
         save_bytes[0] = '\0';
-    if (index_term == index_nl )
+    if (index_term == index_nl  )
         save_bytes[0] = '\0';
     return(rs);
 }
@@ -73,18 +73,18 @@ char *read_file(char *save_bytes, char *rs, int fd)
 
 char *get_next_line(int fd)
 {
-    static char save_bytes[BUFFER_SIZE];
+    static char save_bytes[2000][BUFFER_SIZE];
     char        *rs;
 
-    if (read(fd, save_bytes, 0 ) == -1)
+    if (read(fd, save_bytes[fd], 0 ) == -1)
         return(NULL);
     rs = NULL;
-    if (save_bytes[0])
+    if (save_bytes[fd] && save_bytes[fd][0])
     {
-        rs = check_and_move(save_bytes, rs, save_bytes);
+        rs = check_and_move(save_bytes[fd], rs, save_bytes[fd]);
         if (ft_strlen(rs, '\0') > ft_strlen(rs, '\n'))
             return(rs);
     }
-    rs = read_file(save_bytes, rs, fd);
+    rs = read_file(save_bytes[fd], rs, fd);
     return(rs);
 }
