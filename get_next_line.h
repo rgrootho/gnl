@@ -6,17 +6,12 @@
 /*   By: rgrootho <rgrootho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/31 20:57:23 by rgrootho      #+#    #+#                 */
-/*   Updated: 2022/07/31 21:03:13 by rgrootho      ########   odam.nl         */
+/*   Updated: 2022/08/03 13:11:32 by rgrootho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
-# ifndef BUFFER_SIZE
-
-	BUFFER_SIZE = 1;
-# endif
 
 # include <unistd.h>
 # include <stdlib.h>

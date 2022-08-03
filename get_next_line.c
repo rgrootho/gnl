@@ -6,12 +6,11 @@
 /*   By: rgrootho <rgrootho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/31 20:50:34 by rgrootho      #+#    #+#                 */
-/*   Updated: 2022/07/31 20:53:09 by rgrootho      ########   odam.nl         */
+/*   Updated: 2022/08/03 12:59:23 by rgrootho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 char	*manage_rs(char *rs, char *line_to_check, int i_nl, int i_term)
 {

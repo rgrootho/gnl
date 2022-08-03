@@ -6,12 +6,11 @@
 /*   By: rgrootho <rgrootho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/31 20:56:07 by rgrootho      #+#    #+#                 */
-/*   Updated: 2022/07/31 20:56:09 by rgrootho      ########   odam.nl         */
+/*   Updated: 2022/08/03 13:01:07 by rgrootho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
-#include <stdio.h>
 
 char	*manage_rs(char *rs, char *line_to_check, int i_nl, int i_term)
 {
@@ -88,7 +87,7 @@ char	*get_next_line(int fd)
 	if (read(fd, save_bytes[fd], 0) == -1)
 		return (NULL);
 	rs = NULL;
-	if (save_bytes[fd] && save_bytes[fd][0])
+	if (save_bytes[fd][0])
 	{
 		rs = check_and_move(save_bytes[fd], rs, save_bytes[fd]);
 		if (ft_strlen(rs, '\0') > ft_strlen(rs, '\n'))
