@@ -6,7 +6,7 @@
 /*   By: rgrootho <rgrootho@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/07/31 20:50:34 by rgrootho      #+#    #+#                 */
-/*   Updated: 2022/08/03 12:59:23 by rgrootho      ########   odam.nl         */
+/*   Updated: 2022/08/03 17:14:34 by rgrootho      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,20 @@ char	*check_and_move(char *save_bytes, char *rs, char *line_to_check)
 
 char	*read_file(char *save_bytes, char *rs, int fd)
 {
-	size_t	bytes_read;
+	ssize_t	bytes_read;
 	char	read_buffer[BUFFER_SIZE + 1];
 
 	bytes_read = 1;
 	while (bytes_read > 0)
 	{
 		bytes_read = read(fd, read_buffer, BUFFER_SIZE);
-		read_buffer[bytes_read] = '\0';
 		if (bytes_read < 0)
 		{
 			if (rs != NULL)
 				free(rs);
 			return (NULL);
 		}
+		read_buffer[bytes_read] = '\0';
 		if (bytes_read == 0)
 			break ;
 		rs = check_and_move(save_bytes, rs, read_buffer);
